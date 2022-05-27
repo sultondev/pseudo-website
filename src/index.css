@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .scroll-btns {
+    background-color: none;
+    color: theme('colors.white');
+    border: 1px solid theme('colors.white');
+    padding: 20px;
+  }
+  .active-content__btn {
+    background-color: theme('colors.white');
+    color: theme('colors.black');
+    padding: 20px 21px;
+    border: none;
+  }
+  .book__btn {
+    padding: 11px 56px ;
+    background-color: theme('colors.white');
+    color: theme('colors.black');
+  }
+
+  .active-book__btn {
+    border: 1px solid theme('colors.white');
+    background: none;
+    padding: 10px 55px;
+    color: theme('colors.white');
+  }
+
+}
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-Regular.ttf");
+  font-weight: 400;
+}
+/* 
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-Thin.ttf");
+  font-weight: 100
+} */
+
+
+/* @font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-ThinItalic.ttf");
+  font-weight: 100;
+  font-style: italic;
+} */
+
+/* @font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-LightItalic.ttf");
+  font-weight: 300;
+  font-style: italic;
+} */
+
+
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Alegreya Sans";
+  src: url("./assets/fonts/alegreya-sans/AlegreyaSansSC-BoldItalic.ttf");
+  font-weight: 700;
+  font-style: italic;
+}
