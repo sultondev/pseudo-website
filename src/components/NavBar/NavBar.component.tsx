@@ -1,11 +1,12 @@
+import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <nav className="nav">
       <div className="nav-wrapper flex justify-between items-center min-h-[70px] ">
         <div className="nav-logo text-white">
-          <a href="#" className="main-logo__link text-[28px]">
+          <Link to="/" className="main-logo__link text-[28px]">
             CONCERT CLUB
-          </a>
+          </Link>
         </div>
         <div className="nav-menu flex justify-between 2xl:w-[44%] text-xl xl:w-[40%]">
           <a
