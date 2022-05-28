@@ -1,10 +1,19 @@
+import { useParams } from "react-router-dom";
+import { UsersListData } from "../../recoil/atom";
 import User from "../../typings/interfaces/User.interface";
 import UserPosts from "../UserPosts/UserPosts.component";
+import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function FullView(props: User) {
-  const { name, username, address, company, email, id, phone, website } = props;
+function MakeUserRequest(id: number) {
+  return axios.get<User>(`https://jsonplaceholder.typicode.com/users/${id}`);
+}
+
+function ReturnUserProfile(data: User) {
+  const { name, username, email, phone, website, company, address, id } = data;
   return (
-    <section className="user w-full mt-9">
+    <>
       <table className="user-table w-full">
         <thead className="user-head">
           <tr className="user-head__row">
@@ -52,8 +61,22 @@ function FullView(props: User) {
       </table>
 
       <UserPosts id={id} />
-    </section>
+    </>
   );
 }
+const UserDetails: React.FC = () => {
+  const { id } = useParams();
+  const [userData, setUserData] = useState<User>();
+  useEffect(() => {
+    MakeUserRequest(Number(id)).then((response) => {
+      setUserData(response.data);
+    });
+  }, []);
+  return (
+    <section className="user w-full mt-9">
+      {userData ? <ReturnUserProfile {...userData} /> : <div>Loading...</div>}
+    </section>
+  );
+};
 
-export default FullView;
+export default UserDetails;

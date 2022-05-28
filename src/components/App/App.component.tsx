@@ -8,27 +8,22 @@ import { UserPostsListData, UsersListData } from "../../recoil/atom";
 import { useRecoilState } from "recoil";
 import { Routes, Route } from "react-router-dom";
 import User from "../../typings/interfaces/User.interface";
-import FullView from "../FullView/FullView.component";
+import UserDetails from "../UserDetails/UserDetails.component";
 import { NavBar } from "../NavBar/NavBar.component";
 import { UserPost } from "../../typings/types/UserPost.type";
-import UserFullPosts from "../UserFullPosts/UserFullPosts.component";
+import PostDetails from "../PostDetails/PostDetails.component";
 
 function App() {
   const [usersList, setUsersList] = useRecoilState(UsersListData);
   const [userPostsList, setUserPostsList] =
     useRecoilState<UserPost[]>(UserPostsListData);
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response)
-      .then((data) => {
-        MakePostsRequest(data.data.id)
-          .then((response) => response)
-          .then((data) => {
-            setUserPostsList(data.data);
-          });
-        setUsersList(data.data);
+    axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
+      MakePostsRequest(response.data.id).then((response) => {
+        setUserPostsList(response.data);
       });
+      setUsersList(response.data);
+    });
   }, []);
 
   function MakePostsRequest(id: number) {
@@ -57,26 +52,8 @@ function App() {
             </>
           }
         />
-        {usersList.map((user: User) => {
-          console.log(`user-${user.id}`);
-          return (
-            <Route
-              path={`users/${user.id}`}
-              element={<FullView {...user} />}
-              key={`${user.name + user.id}`}
-            />
-          );
-        })}
-        {userPostsList.map((post: UserPost) => {
-          console.log(post);
-          return (
-            <Route
-              path={`/userId=${post.userId}/posts/${post.id}`}
-              element={<UserFullPosts {...post} />}
-              key={post.id + post.title}
-            />
-          );
-        })}
+        <Route path={`users/:id`} element={<UserDetails />} />
+        <Route path={`/posts/:postId`} element={<PostDetails />} />
       </Routes>
     </div>
   );

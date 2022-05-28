@@ -7,18 +7,12 @@ import {
   TicketItemTemplate,
   BtnTemplate
 } from "../Templates/Templates.component";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./UserPosts.style.sass";
-import { UserProps } from "../../typings/types/UserProps.type";
-import UserFullPosts from "../UserFullPosts/UserFullPosts.component";
-
-function MakePostsRequest(id: number) {
-  return axios.get<UserPost[]>(
-    `https://jsonplaceholder.typicode.com/posts?userId=${id}`
-  );
-}
-
-function UserPosts(props: UserProps) {
+type UserPostsProps = {
+  id: number;
+};
+function UserPosts(props: UserPostsProps) {
   const { id } = props;
   const [postLookStatus, setPostLopkStatus] = useState("priview");
   const [userPostsList, setUserPostsList] =
@@ -29,22 +23,6 @@ function UserPosts(props: UserProps) {
       setUserPostsList(response.data);
     });
   }, []);
-
-  function MakeUser({ id, title, body, userId }: UserPost) {
-    return (
-      <TicketItemTemplate className="post-box 2xl:min-h-[230px] min-w-[239px] max-w-sm ">
-        <div className="post-text">
-          <h3 className="post-box__title text-lg">
-            <strong>{title}</strong>
-          </h3>
-          <p className="post-box__body text-gray-600">{body}</p>
-        </div>
-        <Link to={`/userId=${userId}/posts/${id}`}>
-          <BtnTemplate className="post-box__scan">View Full Post</BtnTemplate>
-        </Link>
-      </TicketItemTemplate>
-    );
-  }
 
   function togglePostLook(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -69,6 +47,26 @@ function UserPosts(props: UserProps) {
         {postLookStatus === "priview" ? "Показать все" : "Скрыть"}
       </button>
     </div>
+  );
+}
+function MakePostsRequest(id: number) {
+  return axios.get<UserPost[]>(
+    `https://jsonplaceholder.typicode.com/posts?userId=${id}`
+  );
+}
+function MakeUser({ id, title, body, userId }: UserPost) {
+  return (
+    <TicketItemTemplate className="post-box 2xl:min-h-[230px] min-w-[239px] max-w-sm ">
+      <div className="post-text">
+        <h3 className="post-box__title text-lg">
+          <strong>{title}</strong>
+        </h3>
+        <p className="post-box__body text-gray-600">{body}</p>
+      </div>
+      <Link to={`/posts/${id}`}>
+        <BtnTemplate className="post-box__scan">View Full Post</BtnTemplate>
+      </Link>
+    </TicketItemTemplate>
   );
 }
 
