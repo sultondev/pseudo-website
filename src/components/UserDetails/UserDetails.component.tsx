@@ -81,7 +81,7 @@ function UserDetails() {
   if (statusOfRequest === 404) {
     return (
       <ErrorIndicator
-        header="You requested 404"
+        header="404"
         message="Please, reload the page or go to home page"
       />
     );

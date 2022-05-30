@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ErrorIndicator from "../ErrorIndicator/ErrorIndicator.component";
 
-function MakePostsRequest(postId: number) {
-  return axios.get<UserPost[]>(
-    `https://jsonplaceholder.typicode.com/posts/?id=${postId}`
+function MakePostRequest(postId: number) {
+  return axios.get<UserPost>(
+    `https://jsonplaceholder.typicode.com/posts/${postId}`
   );
 }
 
@@ -28,11 +28,11 @@ function ReturnPostSection(post: UserPost) {
 
 function PostDetails() {
   const { routeId } = useParams();
-  const [postData, setPostData] = useState<UserPost[]>();
+  const [postData, setPostData] = useState<UserPost>();
   const [statusOfRequest, setStatusOfRequest] = useState<number>(0);
 
   useEffect(() => {
-    MakePostsRequest(Number(routeId))
+    MakePostRequest(Number(routeId))
       .then((response) => {
         setPostData(response.data);
       })
@@ -45,16 +45,16 @@ function PostDetails() {
   if (statusOfRequest === 404) {
     return (
       <ErrorIndicator
-        header="You requested 404"
+        header="404"
         message="Please, reload the page or go to home page"
       />
     );
   }
-
+  console.log(postData);
   return (
     <section className="post">
       <div className="container">
-        {postData ? ReturnPostSection(postData[0]) : <div>Loading...</div>}
+        {postData ? <ReturnPostSection {...postData} /> : <div>Loading...</div>}
       </div>
     </section>
   );
