@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import { UsersListData } from "../../recoil/atom";
-import User from "../../typings/interfaces/User.interface";
 import UserPosts from "../UserPosts/UserPosts.component";
-import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import User from "../../typings/interfaces/User.interface";
+import ErrorIndicator from "../ErrorIndicator/ErrorIndicator.component";
 
 function MakeUserRequest(id: number) {
   return axios.get<User>(`https://jsonplaceholder.typicode.com/users/${id}`);
@@ -64,19 +63,38 @@ function ReturnUserProfile(data: User) {
     </>
   );
 }
-const UserDetails: React.FC = () => {
-  const { id } = useParams();
+
+function UserDetails() {
+  const { routeId } = useParams<routeType>();
   const [userData, setUserData] = useState<User>();
+  const [statusOfRequest, setStatusOfRequest] = useState<number>(0);
+
   useEffect(() => {
-    MakeUserRequest(Number(id)).then((response) => {
-      setUserData(response.data);
-    });
+    MakeUserRequest(Number(routeId))
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        setStatusOfRequest(error.response.status);
+      });
   }, []);
+  if (statusOfRequest === 404) {
+    return (
+      <ErrorIndicator
+        header="You requested 404"
+        message="Please, reload the page or go to home page"
+      />
+    );
+  }
   return (
     <section className="user w-full mt-9">
-      {userData ? <ReturnUserProfile {...userData} /> : <div>Loading...</div>}
+      {userData ? <ReturnUserProfile {...userData} /> : <div>Loading</div>}
     </section>
   );
+}
+
+type routeType = {
+  routeId: string;
 };
 
 export default UserDetails;

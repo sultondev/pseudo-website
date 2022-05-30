@@ -52,7 +52,7 @@ function App() {
             </>
           }
         />
-        <Route path={`users/:id`} element={<UserDetails />} />
+        <Route path={`users/:routeId`} element={<UserDetails />} />
         <Route path={`/posts/:postId`} element={<PostDetails />} />
       </Routes>
     </div>
