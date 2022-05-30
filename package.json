@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "tsc && vite build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "dev": "vite"
+    "dev": "vite",
+    "preview": "vite preview"
   },
+  
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@types/axios": "^0.14.0",

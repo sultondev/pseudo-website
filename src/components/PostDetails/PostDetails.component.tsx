@@ -3,6 +3,7 @@ import PostComments from "../PostComments/PostComments.component";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ErrorIndicator from "../ErrorIndicator/ErrorIndicator.component";
 
 function MakePostsRequest(postId: number) {
   return axios.get<UserPost[]>(
@@ -12,7 +13,6 @@ function MakePostsRequest(postId: number) {
 
 function ReturnPostSection(post: UserPost) {
   const { title, body, userId } = post;
-  console.log(post);
   return (
     <>
       <div className="post-wrapper my-20 px-6 py-2">
@@ -27,19 +27,34 @@ function ReturnPostSection(post: UserPost) {
 }
 
 function PostDetails() {
-  const { postId } = useParams();
+  const { routeId } = useParams();
   const [postData, setPostData] = useState<UserPost[]>();
+  const [statusOfRequest, setStatusOfRequest] = useState<number>(0);
 
   useEffect(() => {
-    MakePostsRequest(Number(postId)).then((response) => {
-      setPostData(response.data);
-    });
+    MakePostsRequest(Number(routeId))
+      .then((response) => {
+        setPostData(response.data);
+      })
+      .catch((error) => {
+        setStatusOfRequest(error.response.status);
+        console.log(error);
+      });
   }, []);
+
+  if (statusOfRequest === 404) {
+    return (
+      <ErrorIndicator
+        header="You requested 404"
+        message="Please, reload the page or go to home page"
+      />
+    );
+  }
 
   return (
     <section className="post">
       <div className="container">
-        {postData ? ReturnPostSection(postData[0]) : "Loading..."}
+        {postData ? ReturnPostSection(postData[0]) : <div>Loading...</div>}
       </div>
     </section>
   );

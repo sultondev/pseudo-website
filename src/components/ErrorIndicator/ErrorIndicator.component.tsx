@@ -1,17 +1,27 @@
 import { ErrorProps } from "../../typings/types/ErrorProps.type";
+import { Link } from "react-router-dom";
+import { BtnTemplate } from "../Templates/Templates.component";
 
 const ErrorIndicator = (props: ErrorProps) => {
   const { message, header } = props;
   return (
     <div className="container">
-      <div className="error">
-        {/* <img src={icon} alt="Error Icon" className="error-icon" /> */}
-        <h4 className="error-header">{header}</h4>
-        <p className="error-subheader">
-          Something has gone terribly wrong
-          <br />
-          <span className="error-subheader__message">{message}</span>
-        </p>
+      <div className="error flex flex-wrap flex-col min-h-[300px] justify-between">
+        <h4 className="error__header text-[40px] font-medium text-red-600">
+          {header}
+        </h4>
+        <div className="error-block ">
+          <p className="">
+            Something has gone terribly wrong. Ask website administrators to fix
+            it.
+          </p>
+          <p className="error-block__message text-4xl text-blue-600">
+            {message}
+          </p>
+        </div>
+        <Link to="/">
+          <BtnTemplate>Go back to home page</BtnTemplate>
+        </Link>
       </div>
     </div>
   );

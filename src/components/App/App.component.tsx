@@ -53,7 +53,7 @@ function App() {
           }
         />
         <Route path={`users/:routeId`} element={<UserDetails />} />
-        <Route path={`/posts/:postId`} element={<PostDetails />} />
+        <Route path={`/posts/:routeId`} element={<PostDetails />} />
       </Routes>
     </div>
   );
