@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { PostCommentsType } from "../../typings/types/PostCommentsType.type";
 import "./PostComments.style.sass";
 import { useRecoilState } from "recoil";
-import { DialogWindowStatusData } from "../../recoil/atom";
+import {
+  DialogWindowStatusData,
+  PostCommentsListData
+} from "../../recoil/atom";
 type PropsId = {
   userId: number;
 };
@@ -15,7 +18,8 @@ function MakeCommentsRequest(id: number) {
 }
 function PostComments(props: PropsId) {
   const { userId } = props;
-  const [commentsList, setCommentsList] = useState<PostCommentsType[]>([]);
+  const [commentsList, setCommentsList] =
+    useRecoilState<PostCommentsType[]>(PostCommentsListData);
   const [commentLookStatus, setCommentLookStatus] = useState("hidden");
   const [dialogWindowStatus, setDialogWindowStatus] = useRecoilState<string>(
     DialogWindowStatusData
@@ -57,7 +61,6 @@ function PostComments(props: PropsId) {
 
         {commentsList
           ? commentsList.map((comment: PostCommentsType) => {
-              console.log(comment);
               return (
                 <div
                   className={`comments ${commentLookStatus} text-black mb-[40px] border-2 border-black w-[70%] h-auto py-2 px-4`}
