@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { PostCommentsType } from "../../typings/types/PostCommentsType.type";
 import "./PostComments.style.sass";
+import { useRecoilState } from "recoil";
+import { DialogWindowStatusData } from "../../recoil/atom";
 type PropsId = {
   userId: number;
 };
@@ -15,6 +17,9 @@ function PostComments(props: PropsId) {
   const { userId } = props;
   const [commentsList, setCommentsList] = useState<PostCommentsType[]>([]);
   const [commentLookStatus, setCommentLookStatus] = useState("hidden");
+  const [dialogWindowStatus, setDialogWindowStatus] = useRecoilState<string>(
+    DialogWindowStatusData
+  );
 
   useEffect(() => {
     MakeCommentsRequest(userId).then((response) => {
@@ -39,7 +44,13 @@ function PostComments(props: PropsId) {
           >
             {commentLookStatus === "hidden" ? "Показать" : "Скрыть"}
           </button>
-          <button className="comments-btns__comment border-2 border-gray-600 px-2 py-1 rounded-full my-8">
+          <button
+            className="comments-btns__comment border-2 border-gray-600 px-2 py-1 rounded-full my-8"
+            onClick={(e) => {
+              e.preventDefault();
+              setDialogWindowStatus("visible");
+            }}
+          >
             Оставить Коментарии
           </button>
         </div>

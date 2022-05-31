@@ -18,4 +18,14 @@ const PostCommentsListData = atom<PostCommentsType[]>({
   default: []
 });
 
-export { UsersListData, UserPostsListData, PostCommentsListData };
+const DialogWindowStatusData = atom<string>({
+  key: "DialogWindowStatusData",
+  default: "hidden"
+});
+
+export {
+  UsersListData,
+  UserPostsListData,
+  PostCommentsListData,
+  DialogWindowStatusData
+};
