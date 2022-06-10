@@ -58,43 +58,44 @@ function PostComments(props: PropsId) {
             Оставить Коментарии
           </button>
         </div>
-
-        {commentsList
-          ? commentsList.map((comment: PostCommentsType) => {
-              return (
-                <div
-                  className={`comments ${commentLookStatus} text-black mb-[40px] border-2 border-black w-[70%] h-auto py-2 px-4`}
-                  key={comment.id + comment.name}
-                >
-                  <header className="comments-header flex gap-3 items-center">
-                    <div className="comments__img">
-                      <img
-                        src={UserImg}
-                        alt="user"
-                        className="comments-header__img w-[50px] h-[50px]"
-                      />
+        <div className="flex flex-col-reverse">
+          {commentsList
+            ? commentsList.map((comment: PostCommentsType) => {
+                return (
+                  <div
+                    className={`comments ${commentLookStatus} text-black mb-[40px] border-2 border-black w-[70%] h-auto py-2 px-4`}
+                    key={comment.id + comment.name}
+                  >
+                    <header className="comments-header flex gap-3 items-center">
+                      <div className="comments__img">
+                        <img
+                          src={UserImg}
+                          alt="user"
+                          className="comments-header__img w-[50px] h-[50px]"
+                        />
+                      </div>
+                      <div className="comments-header flex gap-4">
+                        <h5 className="comments-header__name font-medium text-xl">
+                          {comment.name}
+                        </h5>
+                        <a
+                          href={`mailto: ${comment.email}`}
+                          className="comments-header__email text-gray-500"
+                        >
+                          {comment.email}
+                        </a>
+                      </div>
+                    </header>
+                    <div className="comments-body">
+                      <p className={`comments-body__text px-[60px]`}>
+                        {comment.body}
+                      </p>
                     </div>
-                    <div className="comments-header flex gap-4">
-                      <h5 className="comments-header__name font-medium text-xl">
-                        {comment.name}
-                      </h5>
-                      <a
-                        href={`mailto: ${comment.email}`}
-                        className="comments-header__email text-gray-500"
-                      >
-                        {comment.email}
-                      </a>
-                    </div>
-                  </header>
-                  <div className="comments-body">
-                    <p className={`comments-body__text px-[60px]`}>
-                      {comment.body}
-                    </p>
                   </div>
-                </div>
-              );
-            })
-          : "Loading..."}
+                );
+              })
+            : "Loading..."}
+        </div>
       </div>
     </div>
   );
