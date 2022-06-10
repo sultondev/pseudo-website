@@ -140,7 +140,6 @@ function CommentForm(props: CommentFormProps) {
         }}
       ></div>
       <form
-        action="#"
         className="bg-white border-2 border-black post-form py-10 px-6 text-base min-w-[500px] 
         flex justify-between flex-col min-h-[520px] absolute
         z-[100]
